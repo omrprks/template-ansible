@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  ansible:
+    container_name: "ansible"
+    network_mode: "host"
+    environment:
+      ANSIBLE_ROOT:   "${ANSIBLE_ROOT:-/etc/ansible}"
+      ANSIBLE_CONFIG: "${ANSIBLE_ROOT:-/etc/ansible}/ansible.cfg"
+    env_file: ".env"
+    volumes:
+      - "./ansible.cfg:${ANSIBLE_ROOT:-/etc/ansible}/ansible.cfg:rw"
+      - "./inventory:${ANSIBLE_ROOT:-/etc/ansible}/inventory:rw"
+      - "./playbooks:${ANSIBLE_ROOT:-/etc/ansible}/playbooks:rw"
+      - "./tasks:${ANSIBLE_ROOT:-/etc/ansible}/tasks:rw"
+      - "./vars:${ANSIBLE_ROOT:-/etc/ansible}/vars:rw"
+      - "./roles:${ANSIBLE_ROOT:-/etc/ansible}/roles:rw"
+    user: "root"
+    entrypoint: ""
+    command: "sh"
